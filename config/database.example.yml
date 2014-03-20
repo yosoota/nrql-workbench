@@ -1,0 +1,17 @@
+# createuser -s nrql_workbench
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: nrql_workbench_development
+  pool: 5
+  username: nrql_workbench
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: nrql_workbench_test
+  pool: 5
+  username: nrql_workbench
+  password:
