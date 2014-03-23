@@ -22,3 +22,5 @@ config/database.yml
 /coverage
 
 .idea
+
+/config/initializers/zzz_local_settings.rb

@@ -48,10 +48,6 @@ gem 'spring',        group: :development
 
 gem 'bootstrap-sass-rails'
 
-group :development do
-  gem 'rails-footnotes', :git => 'git@github.com:josevalim/rails-footnotes.git', branch: 'master'
-end
-
 group :development, :test do
   gem 'byebug'
 end
@@ -62,4 +58,24 @@ gem 'awesome_print'
 gem 'tapp'
 
 gem 'unicorn'
+group :development do
+  gem 'thin'
+end
+
 gem 'foreman'
+gem 'dotenv-rails' # for rails server -p 5000
+
+gem 'excon'
+
+# http://secondlife.hatenablog.jp/entry/2014/01/10/190306
+gem 'http-dump'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
+  gem 'letter_opener'
+end
+
+
+gem 'ace-rails-ap'

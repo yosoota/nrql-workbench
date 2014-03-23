@@ -1,0 +1,44 @@
+:css
+  #query_javascript_source {
+      position: relative;
+      width: auto;
+      height: 600px;
+  }
+
+%p
+  %strong Result:
+  = link_to 'SHOW', results_query_path(@query, format: :json), class: 'btn btn-primary'
+
+.row
+  .col-xs-6
+    var results = @query.results; <br/>
+    #query_javascript_source= @query.javascript_source
+    = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
+
+  .col-xs-6
+    <div id="chart_div"></div>
+
+:javascript
+  var editor = ace.edit("query_javascript_source");
+  editor.setTheme("ace/theme/twilight");
+  var JavaScriptMode = require("ace/mode/javascript").Mode;
+  editor.getSession().setMode(new JavaScriptMode());
+  editor.getSession().setTabSize(2);
+  editor.getSession().setUseWrapMode(true);
+  editor.getSession().setValue("#{j @query.javascript_source}");
+
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+:javascript
+  var results = #{@query.result}
+  #{raw @query.javascript_source}
+
+:javascript
+  $(function(){
+    $('#js_update_javascript_source').click(function(){
+      $.post("#{update_javascript_source_query_path(@query, format: :js)}",
+       {query: {javascript_source: editor.getSession().getValue()}})
+    })
+  })

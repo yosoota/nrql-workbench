@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+
+  get 'nrql/query' => 'nrql#query'
+  post 'nrql/insert' => 'nrql#insert'
+
+  resources :queries do
+    member do
+      get :results
+      get :run
+
+      get :edit_javascript_source
+      post :update_javascript_source
+    end
+  end
+
+  root 'queries#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
