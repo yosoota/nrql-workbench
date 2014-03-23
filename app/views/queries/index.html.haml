@@ -4,15 +4,12 @@
   = link_to *(["https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query"] * 2), target: :_blank
 
 = form_for(@query ||= Query.new, url: nrql_query_path, remote: true, method: :get) do |f|
-
-  .field
+  .form-group
     = f.label :query
+    = f.text_area :query, class: 'form-control'
 
-    %br/
-    = f.text_area :query
-
-  .actions
-    = f.submit
+  .actions.pull-right
+    = f.submit 'Run', class: 'btn btn-primary'
 
 %table.table
   %thead
@@ -30,6 +27,3 @@
         %td= link_to 'Show', query
         %td= link_to 'Edit', edit_query_path(query)
         %td= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br/
-= link_to 'New Query', new_query_path
