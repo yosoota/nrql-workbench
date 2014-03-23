@@ -2,20 +2,26 @@
   #query_javascript_source {
       position: relative;
       width: auto;
-      height: 600px;
+      height: 400px;
   }
+
+%p= link_to '< Query', query_path(@query), class: 'btn btn-default'
 
 %p
   %strong Result:
   = link_to 'SHOW', results_query_path(@query, format: :json), class: 'btn btn-primary'
 
 .row
-  .col-xs-6
-    var results = @query.results; <br/>
-    #query_javascript_source= @query.javascript_source
-    = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
+  .col-xs-12
+    %pre
+      var results = <%= RESULT_JSON! %>;
 
-  .col-xs-6
+    #query_javascript_source
+
+    %div{style: 'margin-top: 10px;'}
+      = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
+
+  .col-xs-12
     <div id="chart_div"></div>
 
 :javascript
