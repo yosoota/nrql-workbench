@@ -10,8 +10,9 @@
   = link_to 'Run', run_query_path(@query, format: :js), remote: true, class: 'btn btn-primary'
 
 %p
-  %strong Result:
-  = link_to 'SHOW', results_query_path(@query, format: :json), class: 'btn btn-primary'
+  %strong View Result:
+  = link_to '.html', results_query_path(@query, format: :html), class: 'btn btn-primary'
+  = link_to '.json', results_query_path(@query, format: :json), class: 'btn btn-primary'
 
 
 .row
