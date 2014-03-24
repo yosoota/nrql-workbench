@@ -12,4 +12,15 @@ class ApplicationController < ActionController::Base
     raise "ENV['INSERT_KEY'] is nil" if ENV['INSERT_KEY'].blank?
   end
 
+  attr_accessor :breadcrumbs
+  before_filter{ @breadcrumbs = [] }
+  def add_breadcrumb(*args)
+    if args.size == 2
+      breadcrumb = args
+    elsif args.size == 1
+      breadcrumb = args[0]
+    end
+    @breadcrumbs << breadcrumb
+  end
+
 end

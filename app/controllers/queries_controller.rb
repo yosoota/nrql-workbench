@@ -4,6 +4,11 @@ class QueriesController < ApplicationController
       only: [:show, :edit, :update, :destroy,
             :results, :edit_javascript_source, :update_javascript_source]
 
+  before_action do
+    add_breadcrumb 'NRQL Workbench', '/'
+    add_breadcrumb 'Query', queries_path
+  end
+
   # GET /queries
   # GET /queries.json
   def index
@@ -23,10 +28,12 @@ class QueriesController < ApplicationController
   # GET /queries/1
   # GET /queries/1.json
   def show
+    add_breadcrumb @query.query
   end
 
   # GET
   def edit_javascript_source
+    add_breadcrumb @query.query, query_path(@query)
   end
 
   # POST

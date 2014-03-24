@@ -1,0 +1,10 @@
+- if @breadcrumbs.present?
+  %ul.breadcrumb
+    - @breadcrumbs.each_with_index do |breadcrumb, idx|
+      - case breadcrumb
+      - when Array
+        %li= link_to *breadcrumb
+      - when String
+        %li{class: (@breadcrumbs.size - 1 == idx) ? 'active' : ''}= breadcrumb
+      - else
+        &nbsp;
