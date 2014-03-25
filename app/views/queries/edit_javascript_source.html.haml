@@ -13,6 +13,10 @@
 
 .row
   .col-xs-12
+    %div
+      Google Charts Link:
+      = link_to *(['https://developers.google.com/chart/'] * 2), target: :_blank
+
     %pre
       var results = <%= RESULT_JSON! %>;
 
@@ -21,8 +25,20 @@
     %div{style: 'margin-top: 10px;'}
       = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
 
-  .col-xs-12
-    <div id="chart_div"></div>
+.js_google_chart_area
+  %iframe.js_iframe{src: gc_query_path(@query), width: '99%'}
+  = render template: 'queries/gc'
+
+:javascript
+  $(function(){
+    $('#js_update_javascript_source').click(function(e){
+      $('.js_google_chart_area').empty()
+      e.preventDefault()
+      $.post("#{update_javascript_source_query_path(@query, format: :js)}",
+       {query: {javascript_source: editor.getSession().getValue()}})
+      return false
+    })
+  })
 
 :javascript
   var editor = ace.edit("query_javascript_source");
@@ -32,19 +48,10 @@
   editor.getSession().setTabSize(2);
   editor.getSession().setUseWrapMode(true);
   editor.getSession().setValue("#{j @query.javascript_source}");
-
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-
-:javascript
-  var results = #{@query.result}
-  #{raw @query.javascript_source}
-
-:javascript
-  $(function(){
-    $('#js_update_javascript_source').click(function(){
-      $.post("#{update_javascript_source_query_path(@query, format: :js)}",
-       {query: {javascript_source: editor.getSession().getValue()}})
-    })
-  })
+  editor.commands.addCommand({
+      name: 'myCommand',
+      bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+      exec: function(editor) {
+        alert('hi!')
+      }
+  });

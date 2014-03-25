@@ -1,15 +1,15 @@
 %h1 Listing queries
 
-%h1
-  = link_to *(["https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query"] * 2), target: :_blank
-
 = form_for(@query ||= Query.new, url: nrql_query_path, remote: true, method: :get) do |f|
   .form-group
     = f.label :query
     = f.text_area :query, class: 'form-control'
 
-  .actions.pull-right
-    = f.submit 'Run', class: 'btn btn-primary'
+  .actions
+    .pull-left
+      = link_to 'insight page', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+    .pull-right
+      = f.submit 'Run', class: 'btn btn-primary'
 
 %table.table
   %thead

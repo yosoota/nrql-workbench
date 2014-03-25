@@ -1,0 +1,7 @@
+.row
+  .col-xs-12
+    <div id="chart_div"></div>
+
+:javascript
+  var results = #{@query.result}
+  #{raw @query.javascript_source}

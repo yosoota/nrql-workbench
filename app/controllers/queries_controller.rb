@@ -2,7 +2,7 @@ class QueriesController < ApplicationController
 
   before_action :set_query,
       only: [:show, :edit, :update, :destroy,
-            :results, :edit_javascript_source, :update_javascript_source]
+            :gc, :results, :edit_javascript_source, :update_javascript_source]
 
   before_action do
     add_breadcrumb 'NRQL Workbench', '/'
@@ -64,6 +64,10 @@ class QueriesController < ApplicationController
         format.json { render json: @query.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def gc
+    render layout: 'plain'
   end
 
   # PATCH/PUT /queries/1

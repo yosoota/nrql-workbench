@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
       get :edit_javascript_source
       post :update_javascript_source
+
+      get :gc
     end
   end
 
