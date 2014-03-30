@@ -1,7 +1,5 @@
-.row
-  .col-xs-12
-    <div id="chart_div"></div>
+%div{id: "chart_div_#{@query.id}", width: '900px;'}
 
 :javascript
-  var results = #{@query.result}
+  var results_#{@query.id} = #{@query.result}
   #{raw @query.javascript_source}

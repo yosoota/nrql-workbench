@@ -1,0 +1,33 @@
+- ! defined?(indent) && (indent = 0)
+
+[#{indent}]
+
+- if (hash = data).is_a?(Hash)
+  - if hash.values.any?{|v| v.is_a?(Array)}
+    - data.keys.each do |key|
+      %h2= key
+      = render partial: 'queries/results_hash', locals: {data: hash[key], indent: indent + 1}
+
+  - else
+
+    %table.table
+      - data.keys.each do |key|
+        %tr
+          %th= key
+          %td= data[key]
+
+- elsif (array = data).is_a?(Array)
+  - if array.size >= 2 && array[0].keys == array[1].keys
+    %table.table.table-bordered
+      %tr
+        - array[0].keys.each do |key|
+          %th= key
+
+      - array.each_with_index do |item|
+        %tr
+          = item.values.each do |val|
+            %td= val
+  - else
+    - array.each_with_index do |item, idx|
+      = render partial: 'queries/results_hash', locals: {data: item, indent: indent + 1}
+

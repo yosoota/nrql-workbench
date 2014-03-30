@@ -5,29 +5,29 @@
       height: 400px;
   }
 
-%p= link_to '< Query', query_path(@query), class: 'btn btn-default'
-
-%p
-  %strong Result:
-  = link_to 'SHOW', results_query_path(@query, format: :json), class: 'btn btn-primary'
-
 .row
   .col-xs-12
-    %div
-      Google Charts Link:
-      = link_to *(['https://developers.google.com/chart/'] * 2), target: :_blank
-
-    %pre
-      var results = <%= RESULT_JSON! %>;
+    Source:
+    %div.well
+      &lt;div id="chart_div_#{@query.id}"&gt;&lt;/div&gt;
+      <br />
+      &lt;script&gt; <br />
+      &nbsp;&nbsp;var results_#{} = '#{raw(link_to(truncate(@query.result), results_query_path(@query, format: :json)))}'; <br/>
+      &lt;/script&gt;
 
     #query_javascript_source
 
-    %div{style: 'margin-top: 10px;'}
-      = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
+.row{style: 'line-height: 40px;'}
+  .col-xs-6.text-left
+    = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
 
+  .col-xs-6.text-right
+    Google Charts Link:
+    = link_to *(['https://developers.google.com/chart/'] * 2), target: :_blank
+
+Chart:
 .js_google_chart_area
-  %iframe.js_iframe{src: gc_query_path(@query), width: '99%'}
-  = render template: 'queries/gc'
+  %iframe.js_iframe{src: gc_query_path(@query), width: '99%', height: '300xp;'}
 
 :javascript
   $(function(){
@@ -41,17 +41,5 @@
   })
 
 :javascript
-  var editor = ace.edit("query_javascript_source");
-  editor.setTheme("ace/theme/twilight");
-  var JavaScriptMode = require("ace/mode/javascript").Mode;
-  editor.getSession().setMode(new JavaScriptMode());
-  editor.getSession().setTabSize(2);
-  editor.getSession().setUseWrapMode(true);
-  editor.getSession().setValue("#{j @query.javascript_source}");
-  editor.commands.addCommand({
-      name: 'myCommand',
-      bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
-      exec: function(editor) {
-        alert('hi!')
-      }
-  });
+  var queryJavascriptSource = "#{j @query.javascript_source}"
+  new window.ChartEditor(queryJavascriptSource)

@@ -115,6 +115,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.0.rc1)
       sprockets-rails (~> 2.0.0)
+    rails-footnotes (4.0.0)
+      rails (>= 3.2)
+    rails_stdout_logging (0.0.3)
     railties (4.1.0.rc1)
       actionpack (= 4.1.0.rc1)
       activesupport (= 4.1.0.rc1)
@@ -157,8 +160,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.1)
-      coffee-rails
     tzinfo (1.1.0)
       thread_safe (~> 0.1)
     uglifier (2.5.0)
@@ -193,11 +194,12 @@ DEPENDENCIES
   letter_opener
   pg
   rails (= 4.1.0.rc1)
+  rails-footnotes (>= 4.0.0, < 5)
+  rails_stdout_logging
   sass-rails (~> 4.0.1)
   sdoc (~> 0.4.0)
   spring
   tapp
   thin
-  turbolinks
   uglifier (>= 1.3.0)
   unicorn

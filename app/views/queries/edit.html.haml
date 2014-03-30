@@ -1,5 +1,56 @@
-%h1 Editing query
-= render 'form'
-= link_to 'Show', @query
-|
-\#{link_to 'Back', queries_path}
+.row
+  = form_for(@query ||= Query.new, url: update_query_query_path(@query), remote: true) do |f|
+    .col-xs-6
+      .form-group
+        = f.label :query do
+          Query
+          = link_to 'New Relic Insight Page', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+
+        = f.text_area :query, class: 'form-control', autofocus: true, rows: 10
+
+      .actions
+        .pull-left
+          = f.submit 'Run', class: 'btn btn-primary'
+
+    .col-xs-6
+      #query_result
+        = render partial: 'edit_query_results'
+
+%hr
+
+.row
+  .col-xs-12
+    Source:
+    = link_to 'Google Charts Link', 'https://developers.google.com/chart/', target: :_blank
+
+    %div.well
+      &lt;div id="chart_div_#{@query.id}"&gt;&lt;/div&gt;
+      <br />
+      &lt;script&gt; <br />
+      &nbsp;&nbsp;var results_#{@query.id} = '#{raw(link_to(truncate(@query.result), results_query_path(@query, format: :json)))}'; <br/>
+      &lt;/script&gt;
+
+    #query_javascript_source
+
+.row{style: 'line-height: 40px;'}
+  .col-xs-6.text-left
+    = link_to 'SAVE', '#', remote: true, class: 'btn btn-primary', id: 'js_update_javascript_source'
+
+Chart:
+.js_google_chart_area
+  %iframe.js_iframe{src: gc_query_path(@query), width: '99%', height: '300xp;'}
+
+:javascript
+  $(function(){
+    $('#js_update_javascript_source').click(function(e){
+      $('.js_google_chart_area').empty()
+      e.preventDefault()
+      $.post("#{update_javascript_source_query_path(@query, format: :js)}",
+       {query: {javascript_source: editor.getSession().getValue()}})
+      return false
+    })
+  })
+
+:javascript
+  var queryJavascriptSource = "#{j @query.javascript_source}"
+  new window.ChartEditor(queryJavascriptSource)

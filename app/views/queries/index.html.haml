@@ -1,29 +1,16 @@
-%h1 Listing queries
+= form_for(@query ||= Query.new, remote: true) do |f|
 
-= form_for(@query ||= Query.new, url: nrql_query_path, remote: true, method: :get) do |f|
   .form-group
-    = f.label :query
-    = f.text_area :query, class: 'form-control'
+
+    = f.label :query do
+      Query
+      = link_to 'New Relic Insight Page', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+
+    = f.text_area :query, class: 'form-control', autofocus: true
 
   .actions
-    .pull-left
-      = link_to 'insight page', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
-    .pull-right
-      = f.submit 'Run', class: 'btn btn-primary'
+    = f.submit 'Run', class: 'btn btn-primary'
 
-%table.table
-  %thead
-    %tr
-      %th ID
-      %th Query
-      %th Result
-      %th{:colspan => "3"}
-  %tbody
-    - @queries.each do |query|
-      %tr
-        %td= query.id
-        %td= query.query
-        %td= truncate(query.result)
-        %td= link_to 'Show', query
-        %td= link_to 'Edit', edit_query_path(query)
-        %td= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' }
+%hr
+
+= render partial: 'queries/query_histories_area'

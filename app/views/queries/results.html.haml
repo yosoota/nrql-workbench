@@ -1,1 +1,2 @@
-%pre= JSON.parse(@query.result).pretty_inspect
+- json = JSON.parse(@query.result)
+= render partial: 'queries/results_hash', locals: {data: json}

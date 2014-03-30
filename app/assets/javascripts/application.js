@@ -19,7 +19,8 @@
 //
 //= require_tree .
 
-/*
- = require turbolinks
-
- */
+$(document).on('keydown', '#query_query', function(e){
+  if((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
+    $('.new_query, .edit_query').submit()
+  }
+})
