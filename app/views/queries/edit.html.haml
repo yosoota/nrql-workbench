@@ -1,20 +1,26 @@
 .row
-  = form_for(@query ||= Query.new, url: update_query_query_path(@query), remote: true) do |f|
-    .col-xs-6
-      .form-group
-        = f.label :query do
-          Query
-          = link_to 'New Relic Insight', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+  .col-xs-12
+    = form_for(@query, url: update_query_query_path(@query), remote: true) do |f|
+      .row
+        .col-xs-6
+          .form-group
+            = f.label :query do
+              Query
+              = link_to 'New Relic Insight', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+        .col-xs-6
+          %b Results
+          = link_to 'JSON', results_query_path(@query, format: :json), class: 'btn btn-default'
 
-        = f.text_area :query, class: 'form-control', autofocus: true, rows: 10
+      .row
+        .col-xs-6
+          = f.text_area :query, class: 'form-control', autofocus: true, style: 'height: 220px;'
+        .col-xs-6
+          #query_result
+            = render partial: 'edit_query_results'
 
       .actions
         .pull-left
-          = f.submit 'Run', class: 'btn btn-primary'
-
-    .col-xs-6
-      #query_result
-        = render partial: 'edit_query_results'
+          = f.submit 'Run Query', class: 'btn btn-primary'
 
 %hr
 
