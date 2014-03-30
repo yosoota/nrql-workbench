@@ -4,7 +4,7 @@
       .form-group
         = f.label :query do
           Query
-          = link_to 'New Relic Insight Page', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
+          = link_to 'New Relic Insight', "https://insights.newrelic.com/accounts/#{ENV['ACCOUNT_ID']}/query", target: :_blank
 
         = f.text_area :query, class: 'form-control', autofocus: true, rows: 10
 
@@ -20,8 +20,9 @@
 
 .row
   .col-xs-12
-    Source:
-    = link_to 'Google Charts Link', 'https://developers.google.com/chart/', target: :_blank
+    %b
+      Source:
+      = link_to 'Google Charts', 'https://developers.google.com/chart/', target: :_blank
 
     %div.well
       &lt;div id="chart_div_#{@query.id}"&gt;&lt;/div&gt;
