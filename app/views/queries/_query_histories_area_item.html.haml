@@ -1,0 +1,25 @@
+%div{style: "border-radius: 4px; border: 1px solid black; margin: 2px; padding: 4px;"}
+  .row
+    .col-xs-5
+      Query:
+      %pre{style: 'height: 100px; overflow-y: scroll;'}
+        = query.query
+    .col-xs-7
+      Result:
+      %pre{style: 'height: 100px; overflow-y: scroll;'}
+        = link_to JSON.parse(query.result).pretty_inspect, results_query_path(query, format: :json)
+  .row{style: 'height: 200px;'}
+    .col-xs-5
+      JavaScript:
+      %pre{style: 'height: 200px; overflow-y: scroll;'}
+        = query.javascript_source
+    .col-xs-7
+      Chart:
+      %div{id: "chart_div_#{query.id}", width: '100%'}
+      :javascript
+        var results_#{query.id} = #{query.result}
+        #{raw query.javascript_source}
+  .row
+    .col-xs-12.text-right
+      = link_to '[Edit]', edit_query_path(query)
+      = link_to '[Destroy]', query, method: :delete, data: { confirm: 'Are you sure?' }

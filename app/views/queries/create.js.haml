@@ -1,1 +1,1 @@
-$('.js_query_histories').html("#{j render(partial:'queries/query_histories_area')}")
+$('.js_query_histories').prepend("#{j render(partial:'queries/query_histories_area_item', locals: {query: @query})}")

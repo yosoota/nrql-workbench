@@ -1,27 +1,2 @@
-%table.table.js_query_histories
-  %thead
-    %tr
-      %th ID
-      %th Query
-      %th Result
-      %th Source
-      %th{:colspan => "3"}
-  %tbody
-    - @queries.each do |query|
-      - color = cycle('#FAFAFA', '#FEFEFE')
-      %tr{style: "background-color: #{color}"}
-        %td= query.id
-        %td= query.query
-        %td
-          = truncate(query.result)
-          = link_to 'JSON', results_query_path(query, format: :json), class: 'btn btn-default'
-        %td= truncate(query.javascript_source)
-        %td= link_to 'Show', query
-        %td= link_to 'Edit', edit_query_path(query)
-        %td= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' }
-      %tr{style: "background-color: #{color}"}
-        %td(colspan = '7')
-          %div{id: "chart_div_#{query.id}", width: '900px;'}
-          :javascript
-            var results_#{query.id} = #{query.result}
-            #{raw query.javascript_source}
+.js_query_histories
+  = render partial: 'queries/query_histories_area_item', collection: @queries, as: :query

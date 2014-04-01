@@ -64,7 +64,6 @@ class QueriesController < ApplicationController
         format.html { redirect_to @query, notice: 'Query was successfully created.' }
         format.json { render action: 'show', status: :created, location: @query }
         format.js do
-          @queries = Query.order('id DESC').all
         end
       else
         format.html { render action: 'new' }
